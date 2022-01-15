@@ -13,7 +13,6 @@ void setup() {
   pinMode(A0,INPUT);
   pinMode(0,INPUT_PULLUP);
   pinMode(7, OUTPUT);
-  delay(1000);
   
   //innitialize
   sum = 0;
