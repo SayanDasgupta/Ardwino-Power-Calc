@@ -5,15 +5,17 @@ LiquidCrystal lcd(13, 12, 11, 10, 9, 8);
 SoftwareSerial sim800l(0, 1);
 
 /*
- * For Impulse Rate : 
- * 6400 -> 562.5
- * 3200 -> 1125
- * 1600 -> 2250
+ * Common Impulse Rate of meters: 
+ * 6400 impulses/kwh
+ * 3200 impulses/kwh
+ * 1600 impulses/kwh
  */
 
 //variables
-unsigned int sum, prevTime, count;
-const float impulseRate = 562.5;
+//unsigned int sum, prevTime, count;
+unsigned int count;
+float energyConsumed;
+const float impulseRate = 1600;
 bool flag;
 
 void setup() {
@@ -28,10 +30,9 @@ void setup() {
   delay(1000);
   
   //innitialize
-  sum = 0;
-  prevTime = millis();
   count = 0;
   flag = false;
+  energyConsumed = 0.0;
 }
 
 void loop() {
@@ -39,7 +40,7 @@ void loop() {
   lcd.setCursor(0,0);
   lcd.print("Pulse : ");
   lcd.setCursor(0,1);
-  lcd.print("Power : "+String(getWattConsumed()));
+  lcd.print("Power : "+String(energyConsumed)+"KWH");
   
   // conditionals (Events)
   if(analogRead(A0)>500 && flag==false){
@@ -57,7 +58,7 @@ void loop() {
   if (digitalRead(6) == LOW) {            //And if it's pressed
     Serial.println("Button pressed");   //Shows this message on the serial monitor
     delay(200);                         //Small delay to avoid detecting the button press many times
-    SendSMS(getWattConsumed());                          //And this function is called
+    SendSMS(energyConsumed);            //And this function is called
   }
   if (sim800l.available()){            //Displays on the serial monitor if there's a communication from the module
     Serial.write(sim800l.read()); 
@@ -67,19 +68,8 @@ void loop() {
 // Custom Functions 
 
 void pulse(){
-  unsigned int currTime = millis();
   count++;
-  sum+=(currTime-prevTime);
-  prevTime = currTime;
-}
-
-float getAvgBlinkTime(){
-  return (count==0)?0.0:((sum*1.0)/count);
-}
-
-float getWattConsumed(){
-  float avgBlink = getAvgBlinkTime();
-  return (avgBlink==0.0)?0.0:(impulseRate/avgBlink);
+  energyConsumed = count/impulseRate;
 }
 
 void SendSMS(float val){
@@ -88,8 +78,8 @@ void SendSMS(float val){
   delay(100);
   sim800l.print("AT+CMGS=\"+919080659745\"\r");  //Your phone number don't forget to include your country code, example +212123456789"
   delay(500);
-  sim800l.print("Power Consumed : "+String(val)); //This is the text to send to the phone number, don't make it too long or you have to modify the SoftwareSerial buffer
-  Serial.println("Power Consumed : "+String(val));
+  sim800l.print("Power Consumed : "+String(val)+"kwh"); //This is the text to send to the phone number, don't make it too long or you have to modify the SoftwareSerial buffer
+  Serial.println("Power Consumed : "+String(val)+"kwh");
   delay(500);
   sim800l.print((char)26);// (required according to the datasheet)
   delay(500);
