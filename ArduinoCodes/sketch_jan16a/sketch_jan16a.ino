@@ -9,13 +9,15 @@ SoftwareSerial sim800l(0, 1);
  * 6400 impulses/kwh
  * 3200 impulses/kwh
  * 1600 impulses/kwh
+ * 
+ * ok
  */
 
 //variables
 //unsigned int sum, prevTime, count;
 unsigned int count;
 float energyConsumed;
-const float impulseRate = 1600;
+const float impulseRate = 3;
 bool flag;
 
 void setup() {

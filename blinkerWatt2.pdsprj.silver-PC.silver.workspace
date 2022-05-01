@@ -32,7 +32,7 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="450" x="234" flags="00008023" y="726" h="250" pid="0" iid="9">
+   <POPUP w="450" x="162" flags="00008023" y="580" h="250" pid="0" iid="9">
     <PROPERTIES>
      <ITEM name="AutoEcho">0</ITEM>
      <ITEM name="HexMode">0</ITEM>
@@ -71,7 +71,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="178" flags="80000000" y="268" h="32" pid="14" iid="1">
+   <POPUP w="16" x="178" flags="00000000" y="268" h="32" pid="14" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -134,7 +134,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="16" x="318" flags="80000000" y="408" h="32" pid="14" iid="8">
+   <POPUP w="16" x="318" flags="00000000" y="408" h="32" pid="14" iid="8">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
